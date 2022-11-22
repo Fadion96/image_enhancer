@@ -4,7 +4,7 @@ from .models import Image
 class ImageSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
     owner_id = serializers.ReadOnlyField(source='owner.id')
-    image = serializers.ImageField(required=False)
+    image = serializers.ImageField(required=True)
 
     class Meta:
         model = Image

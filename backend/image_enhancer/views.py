@@ -1,9 +1,13 @@
+from django.shortcuts import get_object_or_404
+from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from rest_framework import permissions
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.parsers import FormParser, MultiPartParser, JSONParser
 from .models import Image
+from .utils import enhance
 from .serializers import ImageSerializer
-from rest_framework.parsers import FormParser, MultiPartParser
-
 
 class ImageViewSet(ModelViewSet):
 
@@ -16,3 +20,22 @@ class ImageViewSet(ModelViewSet):
         
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+class ImageEnhance(APIView):
+
+    # serializer_class = EnhanceSerializer
+    parser_classes = [JSONParser]
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, format=None):
+        image_id = request.data['id']
+        queryset= Image.objects.filter(owner=request.user)
+        image = get_object_or_404(queryset, pk=image_id)
+
+        enhanced_img_file = enhance(image)
+        enhanced_img = Image(owner=request.user, image=enhanced_img_file)
+        enhanced_img.save()
+        enhanced_img_serialized = ImageSerializer(enhanced_img).data
+        
+        return Response(enhanced_img_serialized, status=status.HTTP_201_CREATED)
+        

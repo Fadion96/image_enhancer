@@ -1,9 +1,14 @@
 from django.urls import path, include
-from .views import ImageViewSet
-
+from .views import ImageViewSet, ImageEnhance
+from rest_framework import routers
 
 app_name = 'image'
+
+router = routers.DefaultRouter()
+router.register(r'', ImageViewSet, basename='Image')
+
+
 urlpatterns = [
-   path("", ImageViewSet.as_view({'get': 'list'}), name="index"),
-   path("upload", ImageViewSet.as_view({'post': 'create'}), name="index"),
+   path("enhance/", ImageEnhance.as_view()),
+   path("", include(router.urls)),
 ]
