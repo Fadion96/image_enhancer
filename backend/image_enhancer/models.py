@@ -4,8 +4,10 @@ from django.db.models.signals import pre_save
 from django.dispatch import receiver
 import os
 
+
 def user_dir_path(instance, filename):
-    return f'user_{instance.owner.id}/{filename}'
+    return f"user_{instance.owner.id}/{filename}"
+
 
 class Image(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
