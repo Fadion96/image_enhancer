@@ -37,7 +37,9 @@ class ImageEnhance(APIView):
         style_image = get_object_or_404(queryset, pk=style_image_id)
 
         enhanced_img_file = enhance(content_image, style_image)
-        enhanced_img = Image(owner=request.user, image=enhanced_img_file)
+        enhanced_img = Image(
+            owner=request.user, image=enhanced_img_file, is_result=True
+        )
         enhanced_img.save()
         enhanced_img_serialized = ImageSerializer(enhanced_img).data
 
