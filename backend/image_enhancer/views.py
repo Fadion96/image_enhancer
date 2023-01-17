@@ -28,11 +28,13 @@ class ImageEnhance(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, format=None):
-        image_id = request.data['id']
+        content_image_id = request.data['content_image_id']
+        style_image_id = request.data['style_image_id']
         queryset= Image.objects.filter(owner=request.user)
-        image = get_object_or_404(queryset, pk=image_id)
+        content_image = get_object_or_404(queryset, pk=content_image_id)
+        style_image = get_object_or_404(queryset, pk=style_image_id)
 
-        enhanced_img_file = enhance(image)
+        enhanced_img_file = enhance(content_image, style_image)
         enhanced_img = Image(owner=request.user, image=enhanced_img_file)
         enhanced_img.save()
         enhanced_img_serialized = ImageSerializer(enhanced_img).data
