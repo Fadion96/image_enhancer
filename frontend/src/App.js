@@ -2,7 +2,6 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter, Route, Routes  } from 'react-router-dom';
 import Gallery from './components/Gallery';
-import Preferences from './components/Preferences';
 import Login from './components/Login';
 
 import useToken from './components/useToken';
@@ -18,7 +17,6 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/gallery" element={<Gallery />} />
-          <Route path="/preferences" element={<Preferences />} />
         </Routes>
       </BrowserRouter>
     </div>
