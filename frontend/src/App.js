@@ -10,9 +10,7 @@ import useToken from './components/useToken';
 
 function App() {
   const { token, setToken } = useToken();
-  // if(!token) {
-  //   return <Login setToken={setToken} />
-  // }
+
   return (
 
     <div className="wrapper">

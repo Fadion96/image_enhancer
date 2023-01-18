@@ -15,7 +15,6 @@ async function registerUser(credentials) {
             return response.json();
         }
         else {
-            // console.log(response.json())
             response.json().then((value) => {
                 alert(JSON.stringify(value))
             });

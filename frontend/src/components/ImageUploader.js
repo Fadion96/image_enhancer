@@ -7,17 +7,15 @@ async function uploadImage(data, token) {
     return fetch('http://127.0.0.1:8000/image/', {
       method: 'POST',
       headers: {
-        'Content-Type': 'multipart/form-data',
         'Authorization': 'Token ' + token
 
       },
       body: data
     }).then(function (response) {
-           if(response.status === 200){
+           if(response.status === 201){
                return response.json();
            }
            else {
-               // console.log(response.json())
                response.json().then((value) => {
                    alert(JSON.stringify(value))
                });
@@ -29,7 +27,7 @@ async function uploadImage(data, token) {
 
 export default function ImageUploader() {
     const { token, setToken } = useToken();
-    let image = null;
+    const [image, setImage] = useState();
     const inputRef = createRef()
 
     const handleInput = () => {
@@ -41,20 +39,9 @@ export default function ImageUploader() {
         const data = new FormData();
         data.append("image", e.target.files[0])
         const image_data = await uploadImage(data, token);
-        image = image_data.image;
+        setImage(image_data.image)
       }
 
-    // const handleSubmit = async e => {
-    //   e.preventDefault();
-    //   const token = await loginUser({
-    //     username,
-    //     password
-    //   });
-    //   if(token){
-    //       setToken(token);
-    //       navigate("/");
-    //   }
-    // }
 
     return(
         <div >
