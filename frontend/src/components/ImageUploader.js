@@ -1,7 +1,6 @@
-import React, { useState, createRef } from 'react';
-import {Link, useNavigate} from 'react-router-dom';
-import PropTypes from 'prop-types';
+import React, {createRef, useContext } from 'react';
 import useToken from './useToken';
+import ImagesContext from './ImagesContext';
 
 async function uploadImage(data, token) {
     return fetch('http://127.0.0.1:8000/image/', {
@@ -27,8 +26,8 @@ async function uploadImage(data, token) {
 
 export default function ImageUploader() {
     const { token, setToken } = useToken();
-    const [image, setImage] = useState();
-    const inputRef = createRef()
+    const { images, setImages } = useContext(ImagesContext);
+    const inputRef = createRef();
 
     const handleInput = () => {
         inputRef.current?.click();
@@ -39,16 +38,17 @@ export default function ImageUploader() {
         const data = new FormData();
         data.append("image", e.target.files[0])
         const image_data = await uploadImage(data, token);
-        setImage(image_data.image)
+        if(image_data){
+            setImages([...images, image_data])
+        }
       }
 
 
     return(
         <div >
-            <img src={image}/>
             <div className="m-3">
                 <label className="mx-3">Choose file: </label>
-                <input ref={inputRef} className="d-none" type="file" onChange={handleUpload} />
+                <input ref={inputRef} className="d-none" type="file" onChange={handleUpload} accept="image/*"/>
                 <button onClick={handleInput} className="btn btn-outline-primary">
                     Upload
                 </button>
