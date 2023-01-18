@@ -1,24 +1,42 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter, Route, Routes  } from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import Gallery from './components/Gallery';
 import Login from './components/Login';
+import Register from './components/Registration';
+import ProtectedRoute from './components/ProtectedRoute';
 
 import useToken from './components/useToken';
 
 function App() {
   const { token, setToken } = useToken();
-  if(!token) {
-    return <Login setToken={setToken} />
-  }
+  // if(!token) {
+  //   return <Login setToken={setToken} />
+  // }
   return (
+
     <div className="wrapper">
       <h1>Application</h1>
-      <BrowserRouter>
         <Routes>
-          <Route path="/gallery" element={<Gallery />} />
+        <Route
+            path="/"
+            element={
+                <ProtectedRoute>
+                  <Gallery />
+                </ProtectedRoute>
+              }
+            />
+          <Route path="/login" element={<Login setToken={setToken} />}/>
+          <Route path="/registration" element={<Register setToken={setToken} />}/>
+          <Route
+            path="/gallery"
+            element={
+                <ProtectedRoute>
+                  <Gallery />
+                </ProtectedRoute>
+              }
+            />
         </Routes>
-      </BrowserRouter>
     </div>
   );
 }
