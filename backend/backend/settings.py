@@ -48,11 +48,13 @@ INSTALLED_APPS = [
     "allauth.socialaccount",
     "accounts",
     "image_enhancer",
+    "corsheaders",
 ]
 
 SITE_ID = 1
 ACCOUNT_EMAIL_VERIFICATION = "none"
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -148,3 +150,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, MEDIA_URL)
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+CORS_ALLOW_ALL_ORIGINS = True
