@@ -2,11 +2,11 @@ import React, {createRef, useContext } from 'react';
 import useToken from './useToken';
 import ImagesContext from './ImagesContext';
 
-async function uploadImage(data, token) {
+async function uploadImage(data, userToken) {
     return fetch('http://127.0.0.1:8000/image/', {
       method: 'POST',
       headers: {
-        'Authorization': 'Token ' + token
+        'Authorization': 'Token ' + userToken
 
       },
       body: data

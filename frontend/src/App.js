@@ -13,8 +13,8 @@ function App() {
 
   return (
 
-    <div className="wrapper">
-      <h1>Application</h1>
+    <div className =".container-fluid m-1 p-3">
+      <h1>Neural Style Transfer</h1>
         <Routes>
         <Route
             path="/"

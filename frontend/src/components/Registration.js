@@ -48,29 +48,29 @@ export default function Register({ setToken }) {
     <div className="login-wrapper">
       <h1>Registration</h1>
       <form onSubmit={handleSubmit}>
-        <label>
-          <p>Username</p>
-          <input type="text" onChange={e => setUserName(e.target.value)} />
-        </label>
-        <label>
-          <p>Email</p>
-          <input type="text" onChange={e => setEmail(e.target.value)} />
-        </label>
-        <label>
-          <p>Password</p>
-          <input type="password" onChange={e => setPassword1(e.target.value)} />
-        </label>
-        <label>
-          <p>Confirm password</p>
-          <input type="password" onChange={e => setPassword2(e.target.value)} />
-        </label>
+        <div className="mb-3">
+          <label  className="form-label">Username</label>
+          <input type="text" className="form-control" onChange={e => setUserName(e.target.value)} />
+        </div>
+        <div className="mb-3">
+          <label  className="form-label">Email</label>
+          <input type="email" className="form-control" onChange={e => setEmail(e.target.value)} />
+        </div>
+        <div className="mb-3">
+          <label className="form-label">Password</label>
+          <input type="password" className="form-control" onChange={e => setPassword1(e.target.value)} />
+        </div>
+        <div className="mb-3">
+          <label className="form-label">Confirm password</label>
+          <input type="password" className="form-control" onChange={e => setPassword2(e.target.value)} />
+        </div>
         <div>
-          <button type="submit">Submit</button>
+          <button type="submit" className="btn btn-primary">Submit</button>
         </div>
       </form>
-      <h5> Already registred?</h5>
+      <div className="form-text">Already registred?</div>
       <Link to='/login'>
-        <button type="submit">Login</button>
+        <button type="submit" className="btn btn-secondary btn-sm">Login</button>
       </Link>
     </div>
   )
