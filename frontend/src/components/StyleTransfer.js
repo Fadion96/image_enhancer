@@ -50,15 +50,13 @@ export default function StyleTransfer() {
       }
 
     const handleInputImage = async e => {
-      e.preventDefault();
       setcImage(e.target.value)
       let img = images.find(x => x.id == e.target.value).image;
       setInputImage(img)
     }
 
     const handleStyleImage = async e => {
-      e.preventDefault();
-      setcImage(e.target.value)
+      setsImage(e.target.value)
       let img = images.find(x => x.id == e.target.value).image;
       setStyleImage(img)
     }
