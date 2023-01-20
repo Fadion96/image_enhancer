@@ -30,8 +30,8 @@ class ImageEnhance(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, format=None):
-        content_image_id = request.data["content_image_id"]
-        style_image_id = request.data["style_image_id"]
+        content_image_id = request.data["content_image"]
+        style_image_id = request.data["style_image"]
         queryset = Image.objects.filter(owner=request.user)
         content_image = get_object_or_404(queryset, pk=content_image_id)
         style_image = get_object_or_404(queryset, pk=style_image_id)
