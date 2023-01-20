@@ -52,7 +52,7 @@ Run frontend
 
 ```bash
   cd frontend/
-  npm run
+  npm start
 ```
 
 ## Screenshots
