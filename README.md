@@ -30,7 +30,7 @@ Go to the project directory
 Install backend required libraries
 
 ```bash
-  pip install -r requirements.txt
+  pip install -r requirements/requirements.txt
 ```
 
 Install frontend dependencies
