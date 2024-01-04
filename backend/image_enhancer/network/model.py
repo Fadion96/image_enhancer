@@ -1,8 +1,7 @@
 import torchvision
 
 
-def create_vgg_model():
-
+def create_vgg_model() -> torchvision.Module:
     # Create model
     model_weights = torchvision.models.VGG19_Weights.DEFAULT
     model = torchvision.models.vgg19(weights=model_weights)

@@ -10,5 +10,12 @@ class ImageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Image
-        fields = ["id", "owner", "owner_id", "image", "upload_date", "is_result"]
+        fields = [
+            "id",
+            "owner",
+            "owner_id",
+            "image",
+            "upload_date",
+            "is_result",
+        ]
         read_only_fields = ["is_result"]

@@ -1,45 +1,56 @@
 from .model import create_vgg_model
 from .data_setup import preprocess, deprocess, get_features, gram_matrix
-from .loss_functions import content_loss, style_loss, total_loss
+from .loss_functions import (
+    compute_content_loss,
+    compute_style_loss,
+    compute_total_loss,
+)
 from torch import optim
 import numpy as np
 from PIL import Image
 
 
-def predict(content_image, style_image):
-
+def predict(
+    content_image: Image.Image, style_image: Image.Image
+) -> Image.Image:
     # Create model
     model = create_vgg_model()
 
     # Transform images
-    content_img = preprocess(content_image)
-    style_img = preprocess(style_image)
-    target_img = content_img.clone().requires_grad_(True)
+    content_tensor = preprocess(content_image)
+    style_tensor = preprocess(style_image)
+    target_tensor = content_tensor.clone().requires_grad_(True)
 
-    content_features = get_features(content_img, model)
-    style_features = get_features(style_img, model)
+    content_features = get_features(content_tensor, model)
+    style_features = get_features(style_tensor, model)
 
-    style_gram = {layer: gram_matrix(style_features[layer]) for layer in style_features}
+    style_gram = {
+        layer: gram_matrix(style_features[layer]) for layer in style_features
+    }
 
     # Inference
-    optimizer = optim.Adam([target_img], lr=0.06)
+    optimizer = optim.Adam([target_tensor], lr=0.06)
 
-    alpha_param = 1
-    beta_param = 1e2
+    content_weight = 1
+    style_weight = 1e2
     epochs = 200
 
-    for i in range(epochs):
-        target_features = get_features(target_img, model)
+    for _ in range(epochs):
+        target_features = get_features(target_tensor, model)
 
-        c_loss = content_loss(target_features["layer_4"], content_features["layer_4"])
-        s_loss = style_loss(target_features, style_gram)
-        t_loss = total_loss(c_loss, s_loss, alpha_param, beta_param)
+        content_loss = compute_content_loss(
+            target_features["layer_4"], content_features["layer_4"]
+        )
+        style_loss = compute_style_loss(target_features, style_gram)
+        total_loss = compute_total_loss(
+            content_loss, style_loss, content_weight, style_weight
+        )
 
         optimizer.zero_grad()
-        t_loss.backward()
+        total_loss.backward()
         optimizer.step()
 
-    results = deprocess(target_img)
+    results = deprocess(target_tensor)
 
     return Image.fromarray((results * 255).astype(np.uint8))
 

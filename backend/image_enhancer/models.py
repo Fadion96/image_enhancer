@@ -1,3 +1,4 @@
+from typing import Callable
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import pre_save
@@ -5,7 +6,7 @@ from django.dispatch import receiver
 import os
 
 
-def user_dir_path(instance, filename):
+def user_dir_path(instance: "Image", filename: Callable) -> str:
     return f"user_{instance.owner.id}/{filename}"
 
 
@@ -15,5 +16,6 @@ class Image(models.Model):
     upload_date = models.DateTimeField(auto_now_add=True)
     is_result = models.BooleanField(default=False)
 
-    def filename(self):
+    @property
+    def filename(self) -> str:
         return os.path.basename(self.image.name)

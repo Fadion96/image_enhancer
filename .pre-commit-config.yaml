@@ -2,12 +2,21 @@
 # See https://pre-commit.com/hooks.html for more hooks
 repos:
 -   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v3.2.0
+    rev: v4.5.0
     hooks:
     -   id: trailing-whitespace
     -   id: end-of-file-fixer
     -   id: check-yaml
+# Python Code formatter
 -   repo: https://github.com/psf/black
-    rev: 22.12.0
+    rev: 23.12.1
     hooks:
     -   id: black
+        args: [--line-length=79]
+# Python static typing checker
+-   repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.8.0
+    hooks:
+    -   id: mypy
+        args: [--disallow-untyped-defs, --ignore-missing-imports]
+        additional_dependencies: [types-Pillow]

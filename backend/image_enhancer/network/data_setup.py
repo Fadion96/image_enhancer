@@ -1,42 +1,45 @@
 import torch
 from torchvision import transforms
-from PIL import Image
+from PIL.Image import Image
 import numpy as np
 
 
-def preprocess(img):
-
+def preprocess(img: Image) -> torch.Tensor:
     image = img.convert("RGB")
     imsize = 256
 
-    transform = transforms.Compose(
+    transform_function = transforms.Compose(
         [
             transforms.Resize((imsize, imsize)),
             transforms.ToTensor(),
-            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+            transforms.Normalize(
+                mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]
+            ),
         ]
     )
 
-    image = transform(image)
-    image = image.unsqueeze(dim=0)
+    image_tensor: torch.Tensor = transform_function(image)
+    image_tensor = image_tensor.unsqueeze(dim=0)
 
-    return image
+    return image_tensor
 
 
-def deprocess(image):  # def show_image
-
-    image = image.clone()
-    image = image.squeeze(0)
-    image = image.permute(1, 2, 0)
-    image = image.detach().numpy()
-    image = image * np.array([0.229, 0.224, 0.225]) + np.array([0.485, 0.456, 0.406])
+def deprocess(image_tensor: torch.Tensor) -> np.ndarray:  # def show_image
+    image_tensor = image_tensor.clone()
+    image_tensor = image_tensor.squeeze(0)
+    image_tensor = image_tensor.permute(1, 2, 0)
+    image: np.ndarray = image_tensor.detach().numpy()
+    image = image * np.array([0.229, 0.224, 0.225]) + np.array(
+        [0.485, 0.456, 0.406]
+    )
     image = image.clip(0, 1)
 
     return image
 
 
-def get_features(image, model):
-
+def get_features(
+    image_tensor: torch.Tensor, model: torch.nn.Module
+) -> dict[str, torch.Tensor]:
     features = {}
     layers = {
         "0": "layer_1",
@@ -45,7 +48,7 @@ def get_features(image, model):
         "19": "layer_4",
         "28": "layer_5",
     }
-    x = image
+    x = image_tensor
 
     for name, layer in model._modules.items():
         x = layer(x)
@@ -55,9 +58,8 @@ def get_features(image, model):
     return features
 
 
-def gram_matrix(image):
-
-    b, c, h, w = image.size()
-    image = image.view(c, h * w)
-    gram = torch.mm(image, image.t())
+def gram_matrix(image_layer: torch.Tensor) -> torch.Tensor:
+    _, c, h, w = image_layer.size()
+    image_layer = image_layer.view(c, h * w)
+    gram = torch.mm(image_layer, image_layer.t())
     return gram

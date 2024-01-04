@@ -7,7 +7,6 @@ import image_enhancer.models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -29,7 +28,9 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "image",
-                    models.ImageField(upload_to=image_enhancer.models.user_dir_path),
+                    models.ImageField(
+                        upload_to=image_enhancer.models.user_dir_path
+                    ),
                 ),
                 ("upload_date", models.DateTimeField(auto_now_add=True)),
                 (
