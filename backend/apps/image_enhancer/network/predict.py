@@ -1,13 +1,19 @@
-from .model import create_vgg_model
-from .data_setup import preprocess, deprocess, get_features, gram_matrix
-from .loss_functions import (
+import numpy as np
+from PIL import Image
+from torch import optim
+
+from apps.image_enhancer.network.data_setup import (
+    deprocess,
+    get_features,
+    gram_matrix,
+    preprocess,
+)
+from apps.image_enhancer.network.loss_functions import (
     compute_content_loss,
     compute_style_loss,
     compute_total_loss,
 )
-from torch import optim
-import numpy as np
-from PIL import Image
+from apps.image_enhancer.network.model import create_vgg_model
 
 
 def predict(

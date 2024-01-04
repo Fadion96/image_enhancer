@@ -1,14 +1,14 @@
 from django.shortcuts import get_object_or_404
-from rest_framework.views import APIView
-from rest_framework.viewsets import ModelViewSet
-from rest_framework import permissions
-from rest_framework import status
+from rest_framework import permissions, status
+from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 from rest_framework.request import Request
 from rest_framework.response import Response
-from rest_framework.parsers import FormParser, MultiPartParser, JSONParser
-from image_enhancer.models import Image
-from image_enhancer.utils import enhance
-from image_enhancer.serializers import ImageSerializer
+from rest_framework.views import APIView
+from rest_framework.viewsets import ModelViewSet
+
+from apps.image_enhancer.models import Image
+from apps.image_enhancer.serializers import ImageSerializer
+from apps.image_enhancer.utils import enhance
 
 
 class ImageViewSet(ModelViewSet):

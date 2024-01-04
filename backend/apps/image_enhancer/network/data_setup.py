@@ -1,7 +1,7 @@
-import torch
-from torchvision import transforms
-from PIL.Image import Image
 import numpy as np
+import torch
+from PIL.Image import Image
+from torchvision import transforms
 
 
 def preprocess(img: Image) -> torch.Tensor:

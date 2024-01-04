@@ -3,7 +3,7 @@ from django.apps import AppConfig
 
 class ImageEnhancerConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
-    name = "image_enhancer"
+    name = "apps.image_enhancer"
 
     def ready(self) -> None:
-        import image_enhancer.signals
+        import apps.image_enhancer.signals

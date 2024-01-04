@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Image
 
+from apps.image_enhancer.models import Image
 
 admin.site.register(Image)

@@ -20,3 +20,9 @@ repos:
     -   id: mypy
         args: [--disallow-untyped-defs, --ignore-missing-imports]
         additional_dependencies: [types-Pillow]
+# Sort imports
+-   repo: https://github.com/pycqa/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        args: [--profile=black, --use-parentheses, --src-path=backend/]

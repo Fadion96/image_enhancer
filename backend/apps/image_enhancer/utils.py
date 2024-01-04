@@ -1,9 +1,11 @@
-from PIL import Image as PImage
-from io import BytesIO
 from datetime import datetime
+from io import BytesIO
+
 from django.core.files.base import ContentFile
-from .network.predict import predict
-from image_enhancer.models import Image as ImageModel
+from PIL import Image as PImage
+
+from apps.image_enhancer.models import Image as ImageModel
+from apps.image_enhancer.network.predict import predict
 
 
 def enhance(content_image: ImageModel, style_image: ImageModel) -> ContentFile:

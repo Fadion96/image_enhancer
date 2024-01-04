@@ -1,6 +1,8 @@
 from typing import Union
+
 import torch
-from .data_setup import gram_matrix
+
+from apps.image_enhancer.network.data_setup import gram_matrix
 
 
 def compute_content_loss(

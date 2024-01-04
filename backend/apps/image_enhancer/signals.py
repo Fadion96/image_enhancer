@@ -1,8 +1,10 @@
-from typing import Any
-from django.dispatch import receiver
-from django.db.models.signals import post_delete
-from image_enhancer.models import Image
 import os
+from typing import Any
+
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
+
+from apps.image_enhancer.models import Image
 
 
 @receiver(post_delete, sender=Image)
