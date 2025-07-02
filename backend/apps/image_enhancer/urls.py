@@ -1,6 +1,7 @@
-from django.urls import path, include
-from .views import ImageViewSet, ImageEnhance
+from django.urls import include, path
 from rest_framework import routers
+
+from apps.image_enhancer.views import ImageEnhance, ImageViewSet
 
 app_name = "image"
 
