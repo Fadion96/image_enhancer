@@ -30,7 +30,7 @@ nvidia-nvjitlink-cu12==12.8.61
 nvidia-nvtx-cu12==12.8.55
 pillow==11.0.0
 requests==2.32.4
-setuptools==70.2.0
+setuptools==80.9.0
 sqlparse==0.5.3
 sympy==1.13.3
 torch==2.7.1+cu128
